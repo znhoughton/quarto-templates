@@ -1,0 +1,84 @@
+\documentclass[
+    a4paper,
+    man,
+    floatsintext
+]{glossaPX2}
+
+% Encoding and Language
+\usepackage[T1]{fontenc}
+\usepackage[american]{babel}
+
+% Bibliography
+\usepackage[
+  style=apa,
+  backend=biber,
+  sorting=nyt
+]{biblatex}
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+
+% Styling
+\usepackage[font={footnotesize,it}]{caption}
+\usepackage{csquotes}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{linguex}
+\usepackage{cgloss}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{ {./graphics/} }
+\usepackage{ragged2e}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[title]{appendix}
+
+\renewcommand{\firstrefdash}{} % removes dash in references to examples
+
+$if(title)$
+\title[$shorttitle$]{$title$}
+$endif$
+
+\author[]{
+$for(by-author)$
+\spauthor{
+$by-author.name.literal$\\
+$if(by-author.affiliations)$
+  $for(by-author.affiliations)$
+    \institute{$by-author.affiliations.name$}\\
+  $endfor$
+$endif$
+$if(by-author.email)$
+  \small{$by-author.email$\\}
+$endif$
+$if(by-author.orcid)$
+  \small{ORCID: $by-author.orcid$}
+$endif$
+}
+$sep$ \AND
+$endfor$
+}
+
+
+\begin{document}
+\maketitle
+
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$if(keywords)$
+\begin{keywords}
+$for(keywords)$$keywords$$sep$; $endfor$
+\end{keywords}
+$endif$
+
+$body$
+
+$if(bibliography)$
+\printbibliography
+$endif$
+
+\end{document}
