@@ -1,9 +1,11 @@
 \documentclass[
     a4paper,
-    times
+    man,
+    floatsintext
 ]{glossaPX2}
 
 % Encoding and Language
+\usepackage[T1]{fontenc}
 \usepackage[american]{babel}
 
 % Bibliography — biblatex with APA 7 (required by Glossa Psycholinguistics)
@@ -23,16 +25,19 @@ $endfor$
 \usepackage{multirow}
 
 % Other styling
-% caption, xcolor, hyperref, graphicx already loaded by glossaPX2.cls — do NOT reload
-% (reloading with different options causes option clashes)
+% Note: xcolor must NOT be reloaded (option clash with glossaPX2.cls)
+\usepackage[font={footnotesize,it}]{caption}
 \usepackage{csquotes}  % required by biblatex APA
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{graphicx}
 \usepackage{linguex}   % example numbering (Glossa standard; do NOT also load gb4e)
 \usepackage{cgloss}    % interlinear glosses (\gll, \glt)
 \usepackage{amsmath}
 \usepackage{ragged2e}
+\usepackage{hyperref}
 \usepackage{enumitem}
+\newcommand{\quotes}[1]{``#1''}
 \usepackage[title]{appendix}
 \usepackage[section]{placeins}
 \usepackage{setspace}
