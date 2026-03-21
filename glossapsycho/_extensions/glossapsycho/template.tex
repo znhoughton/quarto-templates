@@ -1,14 +1,12 @@
 \documentclass[
     a4paper,
-    man,
-    floatsintext,
     times
 ]{glossaPX2}
 
 % Encoding and Language
 \usepackage[american]{babel}
 
-% Bibliography
+% Bibliography — biblatex with APA 7 (required by Glossa Psycholinguistics)
 \usepackage[
   style=apa,
   backend=biber,
@@ -18,29 +16,42 @@ $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
 
-% Styling
-% caption already loaded by glossaPX2.cls — just override settings here
-\usepackage{csquotes}
+% Tables — needed for pandoc output
+\usepackage{longtable}
+\usepackage{array}    % pandoc uses >{\raggedright\arraybackslash}p{} column types
+\usepackage{calc}     % pandoc uses \real{} expressions for column widths
+\usepackage{multirow}
+
+% Other styling
+% caption, xcolor, hyperref, graphicx already loaded by glossaPX2.cls — do NOT reload
+% (reloading with different options causes option clashes)
+\usepackage{csquotes}  % required by biblatex APA
 \usepackage{booktabs}
 \usepackage{tabularx}
-\usepackage{linguex}
-\usepackage{cgloss}
+\usepackage{linguex}   % example numbering (Glossa standard; do NOT also load gb4e)
+\usepackage{cgloss}    % interlinear glosses (\gll, \glt)
 \usepackage{amsmath}
-\usepackage{graphicx}
-\graphicspath{ {./graphics/} }
 \usepackage{ragged2e}
-\usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage[title]{appendix}
 \usepackage[section]{placeins}
-\usepackage{gb4e} \noautomath
-\usepackage{pdfcomment}
 \usepackage{setspace}
-\usepackage[table]{xcolor}
 
 \renewcommand{\firstrefdash}{} % removes dash in references to examples
 
-\newcommand{\pandocbounded}[1]{#1}
+% pandoc: scale images to fit line width, preserving aspect ratio
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{%
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}\else#1\fi%
+}
+\makeatother
+
+% pandoc: tight lists
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 $if(title)$
 \title[$shorttitle$]{$title$}
@@ -49,7 +60,6 @@ $endif$
 $if(masked)$
   \author[]{}% masked: true — omit authors for double-blind review
 $else$
-  % If masked is not set at all, print authors by default
   \author[]{
   $for(by-author)$
   \spauthor{
@@ -71,8 +81,6 @@ $else$
   }
 $endif$
 
-
-
 \begin{document}
 \maketitle
 
@@ -83,7 +91,6 @@ $if(masked)$
 \end{center}
   $endif$
 $endif$
-
 
 $if(abstract)$
 \begin{abstract}
