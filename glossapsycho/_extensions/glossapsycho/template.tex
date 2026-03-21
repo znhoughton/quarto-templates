@@ -44,6 +44,10 @@ $endfor$
 % Do NOT load both — they conflict. If using linguex, also add:
 %   \renewcommand{\firstrefdash}{}  (removes dash in cross-references)
 
+$for(header-includes)$
+$header-includes$
+$endfor$
+
 % pandoc: scale images to fit line width, preserving aspect ratio
 \makeatletter
 \newsavebox\pandoc@box
