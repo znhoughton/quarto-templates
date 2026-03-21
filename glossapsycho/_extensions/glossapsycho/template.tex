@@ -65,7 +65,7 @@ $endif$
 $if(masked)$
   \author[]{}% masked: true — omit authors for double-blind review
 $else$
-  \author[]{
+  \author[$if(shortauthor)$$shortauthor$$endif$]{
   $for(by-author)$
   \spauthor{
   $by-author.name.literal$\\
