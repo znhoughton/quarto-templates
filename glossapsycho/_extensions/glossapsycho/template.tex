@@ -31,7 +31,6 @@ $endfor$
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{graphicx}
-\usepackage{linguex}   % example numbering (Glossa standard; do NOT also load gb4e)
 \usepackage{cgloss}    % interlinear glosses (\gll, \glt)
 \usepackage{amsmath}
 \usepackage{ragged2e}
@@ -41,7 +40,9 @@ $endfor$
 \usepackage[title]{appendix}
 \usepackage[section]{placeins}
 
-\renewcommand{\firstrefdash}{} % removes dash in references to examples
+% Example numbering: load either linguex OR gb4e in your document via header-includes.
+% Do NOT load both — they conflict. If using linguex, also add:
+%   \renewcommand{\firstrefdash}{}  (removes dash in cross-references)
 
 % pandoc: scale images to fit line width, preserving aspect ratio
 \makeatletter
