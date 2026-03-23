@@ -7,6 +7,8 @@
 % acl.sty handles: geometry (a4, 2.5cm margins), twocolumn, natbib,
 %   caption, hyperref, bibliographystyle{acl_natbib}.
 % Do NOT load those packages again here.
+% Pass sort option to natbib before acl.sty loads it
+\PassOptionsToPackage{sort}{natbib}
 $if(acl-mode)$
 \usepackage[$acl-mode$]{acl}
 $else$
