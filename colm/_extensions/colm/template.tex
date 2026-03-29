@@ -30,6 +30,15 @@ $endif$
 \usepackage{calc}      % pandoc uses \real{} expressions for column widths
 \usepackage{multirow}
 
+% longtable is incompatible with twocolumn mode.
+% Temporarily switch to onecolumn around each longtable.
+\usepackage{etoolbox}
+\BeforeBeginEnvironment{longtable}{\onecolumn}
+\AfterEndEnvironment{longtable}{\twocolumn}
+
+% Line numbers for submission mode (toggled by \ifcolmsubmission in body)
+\usepackage{lineno}
+
 % Graphics
 \usepackage{graphicx}
 \makeatletter
@@ -42,9 +51,6 @@ $endif$
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \usepackage{fancyvrb}
 \newcommand{\passthrough}[1]{#1}
-
-% Line numbers for submission mode (toggled by \ifcolmsubmission in body)
-\usepackage{lineno}
 
 % Caption placement — force table captions below (matching CoLM template)
 \usepackage{caption}
