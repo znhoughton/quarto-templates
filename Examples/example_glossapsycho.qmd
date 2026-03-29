@@ -1,0 +1,223 @@
+---
+title: "Instructions for Glossa Psycholinguistics Submissions"
+shorttitle: "Instructions for authors"
+shortauthor: "Smith & Jones"
+
+author:
+  - name: "Alice Smith"
+    affiliations:
+      - name: "University of Nowhere"
+    email: alice.smith@nowhere.edu
+    orcid: 0000-0000-0000-0000
+  - name: "Bob Jones"
+    affiliations:
+      - name: "Institute of Made-Up Science"
+    email: bob.jones@madeup.edu
+
+abstract: |
+  This document contains instructions for preparing a submission to
+  Glossa Psycholinguistics using the **glossapsycho** Quarto template.
+  It also serves as a demonstration of the template's formatting: the
+  document you are reading is itself typeset using the template. Replace
+  the YAML fields above and the section content below with your own
+  manuscript.
+
+keywords: [template, reference, example]
+
+bibliography: example.bib
+
+masked: false   # set true for double-blind submission (hides authors, shows word count)
+
+header-includes:
+  - \usepackage{float}   # enables H placement specifier for floats
+  - \usepackage{gb4e}   # for interlinear glosses; use linguex as alternative (not both)
+
+format:
+  glossapsycho-pdf:
+    keep-tex: true
+---
+
+# Installation
+
+The easiest way to install this template is directly from GitHub.
+Run the following command from your project directory:
+
+```{=latex}
+\begin{verbatim}
+quarto add znhoughton/quarto-templates/glossapsycho
+\end{verbatim}
+```
+
+Alternatively, if you have a local clone of the repository, you can
+install from the local path instead:
+
+```{=latex}
+\begin{verbatim}
+quarto add "path/to/quarto-templates/glossapsycho"
+\end{verbatim}
+```
+
+Either method copies the `_extensions/glossapsycho/` folder into your
+project. Once installed, set the format in your document's YAML front
+matter:
+
+```{=latex}
+\begin{verbatim}
+format:
+  glossapsycho-pdf: default
+\end{verbatim}
+```
+
+Then render with:
+
+```{=latex}
+\begin{verbatim}
+quarto render your-document.qmd
+\end{verbatim}
+```
+
+The extension folder is self-contained and can be committed to your
+repository so that collaborators do not need a separate installation
+step. The `_extensions/` folder should not be listed in `.gitignore` if
+you want the template to be available to everyone who clones the
+repository. To update the template to the latest version at any time,
+simply re-run the `quarto add` command from above.
+
+# Text Formatting
+
+This document is typeset using the `glossapsycho` template. The body
+text demonstrates the default font and spacing defined by the bundled
+`glossaPX2.cls` class file. Inline formatting options include **bold**,
+*italic*, `inline code`, and [small caps]{.smallcaps}.
+
+Paragraphs are separated by a blank line. A single line break within
+a paragraph does not produce a new paragraph. Line spacing and page
+geometry are fixed by the class file and should not be overridden. Do
+not add custom geometry, font, or spacing commands to your document.
+
+Section headings use `#` for top-level sections and `##` for
+subsections. The template numbers sections automatically; do not add
+manual numbering to heading text [@Smith2020].
+
+# Tables
+
+Use an R chunk with `knitr::kable()` and the `#| label:` and
+`#| tbl-cap:` chunk options to produce tables.
+
+```{r}
+#| label: tbl-example
+#| tbl-cap: "A simple table showing condition means."
+#| echo: false
+knitr::kable(
+  data.frame(Condition = c("A", "B"), Mean = c(1.2, 2.4), SD = c(0.3, 0.5)),
+  format = "latex", align = c("l", "r", "r"), booktabs = TRUE
+)
+```
+
+Cross-reference with `@tbl-example`, which produces @tbl-example.
+The `booktabs` and `tabularx` packages are loaded by the template and
+available for more complex table formatting. Keep tables narrow enough
+to fit within the text width; the single-column layout accommodates
+wider tables than two-column formats.
+
+# Figures
+
+Use an R chunk with `#| label: fig-xxx` and `#| fig-cap:` chunk
+options to produce figures with captions and cross-reference labels.
+
+```{=latex}
+\begin{figure}[ht]
+  \centering
+  \fbox{\rule{0pt}{3cm}\rule{0.8\linewidth}{0pt}}
+  \caption{A simple figure placeholder.}
+  \label{fig-example}
+\end{figure}
+```
+
+Cross-reference with `\ref{fig-example}`.
+Figure captions are set in small italic type by the template's caption
+style. Figures are floating by default and will be placed at the top
+or bottom of the nearest page. For publication-quality plots, prefer
+vector formats (PDF or SVG) over raster formats (PNG, JPEG) to ensure
+sharpness at any print resolution.
+
+# Equations
+
+Inline math: $y = \beta_0 + \beta_1 x + \varepsilon$.
+
+Display equation:
+
+$$
+Y_{ij} = \beta_0 + \beta_1 X_{ij} + u_i + \varepsilon_{ij}
+$$ {#eq-model}
+
+Cross-reference with `@eq-model`, which produces @eq-model.
+
+Multi-line display equations:
+
+$$
+\mu_i = \alpha + \beta x_i, \quad y_i \sim \mathcal{N}(\mu_i, \sigma^2)
+$$
+
+Use display equations for any expression that is important enough to
+be referred to by number. Number only equations that are actually
+cross-referenced in the text; unnumbered display equations use the
+plain `$$...$$` syntax without a label.
+
+The `amsmath` package is loaded by the template and provides
+environments such as `align`, `gather`, and `cases` via raw LaTeX
+blocks. Inline math uses standard `$...$` delimiters. Avoid mixing
+LaTeX math commands with Pandoc markdown constructs in the same
+expression.
+
+# Interlinear Glosses
+
+Glosses are typeset with `gb4e` via raw LaTeX blocks. Add
+`\usepackage{gb4e}` to `header-includes` in your YAML to enable
+glosses. Use `linguex` as an alternative — but not both, as they
+conflict.
+
+Two-line gloss (`\gll` ... `\glt`):
+
+```{=latex}
+\begin{exe}
+  \ex
+  \gll Das Kind schläft. \\
+       the child sleeps \\
+  \glt `The child sleeps.'
+\end{exe}
+```
+
+Three-line gloss with morpheme breaks (`\glll`):
+
+```{=latex}
+\begin{exe}
+  \ex
+  \glll un-believ-able \\
+       \textsc{neg}-believe-\textsc{adj} \\
+       un-believ-able \\
+  \glt `unbelievable'
+\end{exe}
+```
+
+Cross-reference examples with `\Next`, `\NNext`, or the `\ref{}`
+mechanism provided by the package.
+
+# Masked Submission
+
+Set `masked: true` in the YAML front matter to enable double-blind
+mode. This suppresses all author and affiliation information and
+replaces it with an automatic word count provided by the bundled Lua
+filter. The `shorttitle`, `shortauthor`, and `orcid` fields are also
+suppressed in masked mode.
+
+Remember to remove or anonymise any self-identifying references in the
+manuscript body before submitting. This includes references to your
+own prior work that would reveal authorship, links to personal
+repositories, and acknowledgements. Switch back to `masked: false`
+for the final camera-ready version.
+
+# References {.unnumbered}
+
+::: {#refs}
+:::

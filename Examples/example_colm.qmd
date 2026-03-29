@@ -1,0 +1,197 @@
+---
+title: "Instructions for COLM 2026 Submissions"
+
+author:
+  - name: "Alice Smith"
+    affiliations:
+      - name: "University of Nowhere"
+    email: alice.smith@nowhere.edu
+  - name: "Bob Jones"
+    affiliations:
+      - name: "Institute of Made-Up Science"
+    email: bob.jones@madeup.edu
+
+abstract: |
+  This document contains instructions for preparing a submission to
+  COLM 2026 using the **colm** Quarto template. It also serves as a
+  demonstration of the template's formatting: the document you are
+  reading is itself typeset using the template. Replace the YAML fields
+  above and the section content below with your own manuscript.
+
+bibliography: example.bib
+
+colm-mode: submission   # submission | preprint | final
+
+tbl-cap-location: bottom
+
+format:
+  colm-pdf: default
+---
+
+# Installation
+
+The easiest way to install this template is directly from GitHub.
+Run the following command from your project directory:
+
+```{=latex}
+\begin{verbatim}
+quarto add znhoughton/quarto-templates/colm
+\end{verbatim}
+```
+
+Alternatively, if you have a local clone of the repository, you can
+install from the local path instead:
+
+```{=latex}
+\begin{verbatim}
+quarto add "path/to/quarto-templates/colm"
+\end{verbatim}
+```
+
+Either method copies the `_extensions/colm/` folder into your project.
+Once installed, set the format in your document's YAML front matter:
+
+```{=latex}
+\begin{verbatim}
+format:
+  colm-pdf: default
+\end{verbatim}
+```
+
+Then render with:
+
+```{=latex}
+\begin{verbatim}
+quarto render your-document.qmd
+\end{verbatim}
+```
+
+The extension folder is self-contained and can be committed to your
+repository so that collaborators do not need a separate installation
+step. The `_extensions/` folder should not be listed in `.gitignore` if
+you want the template to be available to everyone who clones the
+repository. To update the template to the latest version at any time,
+simply re-run the `quarto add` command from above.
+
+# Text Formatting
+
+This document is typeset using the `colm` template. The body text you
+are reading demonstrates the default Palatino font (tgpagella +
+mathpazo) and two-column layout. Inline formatting options include
+**bold**, *italic*, `inline code`, and [small caps]{.smallcaps}.
+
+Long tables and figures can span both columns using the `table*` and
+`figure*` LaTeX environments in a raw LaTeX block. Paragraphs are
+separated by a blank line. A single line break within a paragraph does
+not produce a new paragraph.
+
+The COLM template uses Palatino for body text and Inconsolata for
+monospace. Font size, line spacing, and margins are set by the bundled
+class file and should not be overridden. Do not add custom geometry,
+font, or spacing commands to your document.
+
+Section headings use `#` for top-level sections and `##` for
+subsections. The template numbers sections automatically; do not add
+manual numbering to heading text [@Smith2020].
+
+# Tables
+
+Use an R chunk with `knitr::kable()` and the `#| label:` and
+`#| tbl-cap:` chunk options to produce tables.
+
+```{r}
+#| label: tbl-example
+#| tbl-cap: "A simple table showing condition means."
+#| echo: false
+knitr::kable(
+  data.frame(Condition = c("A", "B"), Mean = c(1.2, 2.4), SD = c(0.3, 0.5)),
+  format = "latex", align = c("l", "r", "r"), booktabs = TRUE
+)
+```
+
+Cross-reference with `@tbl-example`, which produces @tbl-example.
+Tables that span both columns use a `table*` environment in a raw
+LaTeX block. Keep single-column tables narrow enough to fit within
+one column width; use the `table*` environment only when the content
+genuinely requires the full page width.
+
+# Figures
+
+Use an R chunk with `#| label: fig-xxx` and `#| fig-cap:` chunk
+options to produce figures with captions and cross-reference labels.
+
+```{r}
+#| label: fig-example
+#| fig-cap: "A simple scatter plot for illustration."
+#| echo: false
+plot(1:5, c(2.1, 3.4, 2.8, 4.2, 3.9),
+     xlab = "Condition", ylab = "Mean RT (s)", pch = 19)
+```
+
+Cross-reference with `@fig-example`, which produces @fig-example.
+Wide figures can span both columns using a `figure*` environment in a
+raw LaTeX block. Figures are floating by default and will be placed at
+the top or bottom of the nearest page. For publication-quality plots,
+prefer vector formats (PDF or SVG) over raster formats (PNG, JPEG)
+to ensure sharpness at any print resolution.
+
+# Equations
+
+Inline math: $y = \beta_0 + \beta_1 x + \varepsilon$.
+
+Display equation:
+
+$$
+Y_{ij} = \beta_0 + \beta_1 X_{ij} + u_i + \varepsilon_{ij}
+$$ {#eq-model}
+
+Cross-reference with `@eq-model`, which produces @eq-model.
+
+Multi-line display equations:
+
+$$
+\mu_i = \alpha + \beta x_i, \quad y_i \sim \mathcal{N}(\mu_i, \sigma^2)
+$$
+
+Use display equations for any expression that is important enough to
+be referred to by number. Number only equations that are actually
+cross-referenced in the text; unnumbered display equations use the
+plain `$$...$$` syntax without a label.
+
+The `amsmath` package is loaded by the template and provides
+environments such as `align`, `gather`, and `cases` via raw LaTeX
+blocks. Inline math uses standard `$...$` delimiters. Avoid mixing
+LaTeX math commands with Pandoc markdown constructs in the same
+expression.
+
+# Submission Modes
+
+Change `colm-mode` in the YAML front matter to switch modes:
+
+```{r}
+#| label: tbl-modes
+#| tbl-cap: "COLM submission modes."
+#| echo: false
+knitr::kable(
+  data.frame(
+    Mode       = c("submission", "preprint", "final"),
+    Authors    = c("anonymous", "shown", "shown"),
+    Lines      = c("yes", "no", "no"),
+    Header     = c("(none)", "Preprint. Under review.", "Published at COLM 2026")
+  ),
+  format = "latex", align = c("l", "l", "l", "l"), booktabs = TRUE
+)
+```
+
+In `submission` mode the document is anonymised and line numbers are
+added for reviewer reference. The author list is suppressed. In
+`final` mode, authors and affiliations are shown and line numbers are
+removed. Use `preprint` for posting to arXiv or a personal website
+before the camera-ready deadline. Switch modes by changing a single
+YAML field; no other changes to the document are needed.
+
+Remember to remove or anonymise any self-identifying references in the
+manuscript body before submitting in `submission` mode. This includes
+references to your own prior work that would reveal authorship, links
+to personal repositories, and acknowledgements. Restore these for the
+`final` camera-ready version.
