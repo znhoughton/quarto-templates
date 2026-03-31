@@ -5,7 +5,7 @@ Quarto PDF template for ACL, EMNLP, NAACL, and other \*ACL affiliated conference
 ## Usage
 
 ```bash
-quarto add "path/to/Quarto Templates/acl"
+quarto add znhoughton/quarto-templates/acl
 ```
 
 ```yaml

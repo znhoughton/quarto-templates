@@ -5,7 +5,7 @@ Quarto PDF template for Glossa Psycholinguistics journal submissions.
 ## Usage
 
 ```bash
-quarto add "path/to/Quarto Templates/glossapsycho"
+quarto add znhoughton/quarto-templates/glossapsycho
 ```
 
 ```yaml

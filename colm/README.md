@@ -5,7 +5,7 @@ Quarto PDF template for the Conference on Language Modeling (COLM 2026).
 ## Usage
 
 ```bash
-quarto add "path/to/Quarto Templates/colm"
+quarto add znhoughton/quarto-templates/colm
 ```
 
 ```yaml

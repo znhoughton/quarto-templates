@@ -18,9 +18,9 @@ Each template lives in its own subdirectory as a Quarto extension. To use a temp
 
 ```bash
 # From your new project directory:
-quarto add "path/to/Quarto Templates/acl"
-quarto add "path/to/Quarto Templates/colm"
-quarto add "path/to/Quarto Templates/glossapsycho"
+quarto add znhoughton/quarto-templates/acl
+quarto add znhoughton/quarto-templates/colm
+quarto add znhoughton/quarto-templates/glossapsycho
 ```
 
 This copies the `_extensions/` folder into your project. After that, reference the format in your `.qmd` YAML header.
